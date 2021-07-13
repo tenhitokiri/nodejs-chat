@@ -1,17 +1,19 @@
-const express = require('express');
 const morgan = require('morgan');
-const socketio = require('socket.io');
-const http = require('http');
-const path = require('path');
-
+const express = require('express');
 const app = express();
+
+const http = require('http');
+const server = http.createServer(app);
+
+const { Server } = require('socket.io');
+const io = new Server(server);
+
+const path = require('path');
 
 //Settings
 const port = process.env.PORT || 3500;
 app.set('port', port);
 
-const server = http.createServer(app);
-const io = socketio.listen(server);
 
 //Usar Sockets
 require('./socket')(io);
